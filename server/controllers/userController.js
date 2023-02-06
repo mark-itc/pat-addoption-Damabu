@@ -11,6 +11,7 @@ const signUp = async (req, res) => {
 
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(password, salt);
+    console.log(phoneNumber);
 
     const user = await User.create({
       email,
@@ -24,6 +25,7 @@ const signUp = async (req, res) => {
 
     res.status(200).json({ user });
   } catch (error) {
+    console.log(error);
     if (error && error.code === 11000) {
       return res.status(400).json({ msg: 'User already exists' });
     }

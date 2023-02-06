@@ -4,15 +4,7 @@ const verifyPassword = (req, res, next) => {
   const { password, repeatPassword } = req.body;
 
   if (password !== repeatPassword) {
-    return res.status(400).json({ message: 'Passwords do not match' });
-  }
-
-  next();
-};
-
-const userExists = async (req, res, next) => {
-  if (false) {
-    res.status(200).json({ message: 'User already exists' });
+    return res.status(400).json({ msg: 'Passwords do not match' });
   }
 
   next();
@@ -41,4 +33,4 @@ const protectToken = async (req, res, next) => {
   }
 };
 
-module.exports = { verifyPassword, userExists, protectToken };
+module.exports = { verifyPassword, protectToken };

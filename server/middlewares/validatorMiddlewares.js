@@ -7,7 +7,6 @@ addFormats(ajv);
 addErrors(ajv);
 
 const userValidate = (req, res, next) => {
-  console.log(req.body);
   const schema = {
     type: 'object',
     properties: {
@@ -33,8 +32,6 @@ const userValidate = (req, res, next) => {
     },
     required: ['firstName', 'lastName', 'email', 'password', 'phoneNumber'],
   };
-
-  console.log(new Date().getFullYear() - 100);
 
   const validateUser = ajv.compile(schema);
 
