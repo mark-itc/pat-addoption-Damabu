@@ -27,8 +27,8 @@ const Login = () => {
         data
       );
       setLoading(false);
-      navigate('/home');
-      document.cookie = `token = ${res.data.token}`;
+      navigate('/dashboard');
+      document.cookie = `token = ${res.data.token}; max-age = 10`;
     } catch (error) {
       setLoading(false);
       setError({ state: true, message: error.response.data.msg });

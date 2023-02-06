@@ -2,7 +2,9 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 
 const Home = () => {
-  const pet = async () => {
+  const cookie = document.cookie;
+  console.log(cookie);
+  /*const pet = async () => {
     try {
       const res = await axios({
         method: 'post',
@@ -20,7 +22,7 @@ const Home = () => {
 
   useEffect(() => {
     pet();
-  }, []);
+  }, []);*/
 
   return <div>Home</div>;
 };
