@@ -20,4 +20,21 @@ const addPet = async (req, res) => {
   res.status(200).json({ newPet });
 };
 
-module.exports = { addPet };
+const getPetById = async (req, res) => {
+  const { id } = req.params;
+  let pet;
+
+  try {
+    pet = await AddPet.findById(id);
+  } catch (error) {
+    return res.status(404).json({ message: 'Pet not found' });
+  }
+
+  if (!pet) {
+    return res.status(404).json({ message: 'Pet not found' });
+  }
+
+  res.status(200).json({ pet });
+};
+
+module.exports = { addPet, getPetById };
