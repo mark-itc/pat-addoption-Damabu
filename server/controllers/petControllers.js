@@ -33,8 +33,25 @@ const getPetById = async (req, res) => {
   if (!pet) {
     return res.status(404).json({ message: 'Pet not found' });
   }
-
   res.status(200).json({ pet });
 };
 
-module.exports = { addPet, getPetById };
+const getAllPets = async (req, res) => {
+  const filter = {};
+
+  console.log(req.query);
+
+  for (const prop in req.query) {
+    if (req.query[prop]) {
+      filter[prop] = req.query[prop];
+    }
+  }
+
+  console.log(filter);
+
+  const pets = await AddPet.find(filter);
+
+  res.status(200).json({ pets });
+};
+
+module.exports = { addPet, getPetById, getAllPets };
