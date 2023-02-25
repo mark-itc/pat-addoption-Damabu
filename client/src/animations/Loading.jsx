@@ -6,7 +6,7 @@ import load from '../assets/loading.json';
 const Loading = () => {
   return (
     <MainContAnimation>
-      <Lottie animationData={load} loop={true} />
+      <Lottie animationData={load} loop={false} />
     </MainContAnimation>
   );
 };

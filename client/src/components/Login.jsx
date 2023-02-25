@@ -28,7 +28,7 @@ const Login = () => {
         data
       );
       setLoading(false);
-      await localforage.setItem('user', res.data.user);
+      await localforage.setItem('user', res.data);
       navigate('/dashboard');
       document.cookie = `token = ${res.data.token}; max-age = 10`;
     } catch (error) {
