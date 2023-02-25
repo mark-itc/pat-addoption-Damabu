@@ -1,23 +1,23 @@
 const { User } = require('../models/userModel');
 const fs = require('fs');
+const { ref, uploadBytes, getDownloadURL } = require('firebase/storage');
+const { storage } = require('../utils/firebase');
+const { AddPet } = require('../models/addPetModel');
 
 const addPet = async (req, res) => {
   const { userId } = req;
+  const imgPet = req.file;
+  const pet = req.body;
 
-  fs.writeFileSync('mascota.pdf', 'Hola me cree un archivo');
-  const keys = JSON.parse(fs.readFileSync(`${__dirname}/../google.json`));
+  const imgRef = ref(storage, `images/pets/${imgPet.originalname}`);
+  const resImg = await uploadBytes(imgRef, imgPet.buffer);
+  const urlImg = await getDownloadURL(imgRef);
 
-  fs.mkdirSync(`${__dirname}/../uploads`);
-  console.log(keys.email);
+  pet.picture = urlImg;
 
-  console.log(req.path);
+  const newPet = await AddPet.create(pet);
 
-  const user = await User.findOne({
-    where: { id: userId },
-    attributes: { exclude: ['password'] },
-  });
-
-  res.status(200).json({ user });
+  res.status(200).json({ newPet });
 };
 
 module.exports = { addPet };

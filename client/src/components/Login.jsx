@@ -1,4 +1,5 @@
 import axios from 'axios';
+import localforage from 'localforage';
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Loading from '../animations/Loading';
@@ -27,6 +28,7 @@ const Login = () => {
         data
       );
       setLoading(false);
+      await localforage.setItem('user', res.data.user);
       navigate('/dashboard');
       document.cookie = `token = ${res.data.token}; max-age = 10`;
     } catch (error) {

@@ -2,8 +2,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 
 const Home = () => {
-  const cookie = document.cookie;
-  console.log(cookie);
+ 
   /*const pet = async () => {
     try {
       const res = await axios({
