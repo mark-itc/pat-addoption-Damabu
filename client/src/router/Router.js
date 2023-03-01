@@ -6,6 +6,7 @@ import Home from '../components/Home';
 import Login from '../components/Login';
 import Nav from '../components/Nav';
 import SignUp from '../components/SignUp';
+import ViewPet from '../components/ViewPet';
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
         <Route path='/signup' element={<SignUp />} />
         <Route element={<Nav />}>
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/dashboard/viewpet/:id' element={<ViewPet />} />
           <Route path='/addpet' element={<AddPet />} />
         </Route>
       </Routes>

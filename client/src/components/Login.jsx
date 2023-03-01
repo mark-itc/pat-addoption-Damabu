@@ -30,7 +30,7 @@ const Login = () => {
       setLoading(false);
       await localforage.setItem('user', res.data);
       navigate('/dashboard');
-      document.cookie = `token = ${res.data.token}; max-age = 10`;
+      document.cookie = `token = ${res.data.token}; `;
     } catch (error) {
       setLoading(false);
       setError({ state: true, message: error.response.data.msg });

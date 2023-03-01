@@ -55,6 +55,7 @@ const MainContainer = styled.div`
   justify-content: space-between;
   flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 `;
 
 const MainContNav = styled.div`
@@ -104,6 +105,11 @@ const Main = styled.div`
 
 const ListSubMenu = styled.ul`
   text-decoration: none;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+  }
 
   li {
     padding-left: 20px;
