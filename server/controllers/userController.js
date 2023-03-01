@@ -7,7 +7,7 @@ dotenv.config({ path: './.env' });
 
 const signUp = async (req, res) => {
   try {
-    const { email, password, firstName, lastName, phoneNumber } = req.body;
+    const { email, password, firstName, lastName, phoneNumber, rol } = req.body;
 
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -19,6 +19,7 @@ const signUp = async (req, res) => {
       lastName,
       phoneNumber,
       password: hashedPassword,
+      rol,
     });
 
     user.password = undefined;
