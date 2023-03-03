@@ -37,6 +37,28 @@ const Dashboard = () => {
 
   console.log(data);
 
+  const adoptPet = async (e, id) => {
+    e.stopPropagation();
+
+    console.log(id);
+    try {
+      const res = await axios({
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        url: `${process.env.REACT_APP_API_URL}/api/v1/pets/pet/${id}/adopt`,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error.response);
+      if (error.response.statusText === 'Unauthorized') {
+        localStorage.removeItem('token');
+        navigate('/login');
+      }
+    }
+  };
+
   /*if (token === '') {
     return <Navigate to='/login' />;
   }*/
@@ -50,6 +72,7 @@ const Dashboard = () => {
             <p>Type : {pet.type}</p>
             <p>Name : {pet.name}</p>
             <p>Adoption Status : {pet.adoptionStatus}</p>
+            <button onClick={(e) => adoptPet(e, pet._id)}>Adopt</button>
           </CardPet>
         );
       })}

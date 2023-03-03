@@ -74,4 +74,66 @@ const updatePet = async (req, res) => {
   res.status(200).json({ message: 'Pet updated' });
 };
 
-module.exports = { addPet, getPetById, getAllPets, updatePet };
+const adoptPet = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req;
+
+  const pet = await AddPet.findById(id);
+
+  const result = await AddPet.updateOne(
+    { _id: id },
+    { $set: { adoptedBy: userId, adoptionStatus: 'Adopted' } }
+  );
+
+  res.status(200).json({ message: 'Pet adopted' });
+};
+
+const returnPet = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req;
+
+  const pet = await AddPet.findById(id);
+
+  const result = await AddPet.updateOne(
+    { _id: id },
+    { $set: { adoptedBy: null, adoptionStatus: 'Available' } }
+  );
+
+  res.status(200).json({ message: 'Pet returned' });
+};
+
+const savePet = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req;
+
+  console.log(userId);
+
+  const user = await User.findByIdAndUpdate(userId, {
+    $addToSet: { savePets: id },
+  });
+
+  res.status(200).json({ message: 'Pet saved' });
+};
+
+const deletePet = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req;
+
+  const user = await User.findById(userId);
+
+  user.savePets.pull(id);
+  await user.save();
+
+  res.status(200).json({ message: 'Pet deleted from saved' });
+};
+
+module.exports = {
+  addPet,
+  getPetById,
+  getAllPets,
+  updatePet,
+  adoptPet,
+  returnPet,
+  savePet,
+  deletePet,
+};

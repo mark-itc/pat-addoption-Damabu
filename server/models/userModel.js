@@ -26,6 +26,13 @@ const userSchema = new Schema({
     required: true,
   },
 
+  savePets: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'pets',
+    },
+  ],
+
   rol: {
     type: String,
     required: true,

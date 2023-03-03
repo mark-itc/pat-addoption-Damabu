@@ -13,7 +13,7 @@ const addPetSchema = new Schema({
   },
   adoptionStatus: {
     type: String,
-    required: true,
+    required: false,
   },
   picture: {
     type: String,
@@ -46,6 +46,12 @@ const addPetSchema = new Schema({
   breed: {
     type: String,
     required: true,
+  },
+  adoptedBy: {
+    type: Schema.Types.ObjectId,
+    ref: 'users',
+    required: false,
+    default: null,
   },
 });
 

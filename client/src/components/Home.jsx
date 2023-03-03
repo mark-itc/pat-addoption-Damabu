@@ -1,8 +1,9 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import Dashboard from './Dashboard';
 
 const Home = () => {
-  return <div>Home</div>;
+  return <Dashboard />;
 };
 
 export default Home;
