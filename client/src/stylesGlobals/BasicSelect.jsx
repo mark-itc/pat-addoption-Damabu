@@ -4,8 +4,13 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function BasicSelect({ textLabel, options, name }) {
-  const [age, setAge] = React.useState('');
+export default function BasicSelect({
+  textLabel,
+  options,
+  name,
+  defaultValue,
+}) {
+  const [age, setAge] = React.useState(defaultValue);
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -17,6 +22,7 @@ export default function BasicSelect({ textLabel, options, name }) {
       <Select
         labelId='demo-simple-select-label'
         id='demo-simple-select'
+        defaultValue={defaultValue}
         name={name}
         value={age}
         label='Age'

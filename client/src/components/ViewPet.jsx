@@ -1,15 +1,27 @@
 import axios from 'axios';
+import localforage from 'localforage';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { setState } from '../store/slice/states/state.slice';
 import { getDataCookies } from '../utils/getDataCookies';
+import BasicModal from './BasicModal';
 
 const ViewPet = () => {
   const { id } = useParams();
-
+  const dispatch = useDispatch();
   const token = getDataCookies('token');
   const [data, setData] = useState({});
+  const [role, setRole] = useState('');
+  const [handleModal, setHandleModal] = useState(true);
+
+  useEffect(() => {
+    localforage.getItem('user').then((res) => {
+      setRole(res.user.rol);
+    });
+  }, []);
 
   useEffect(() => {
     axios
@@ -25,6 +37,7 @@ const ViewPet = () => {
 
   return (
     <ContaintViewPet>
+      <BasicModal isActive={handleModal} data={data} id={id} change={setData} />
       <ContInfoPet>
         <div>
           <img src={data.pet?.picture} alt='' />
@@ -37,11 +50,20 @@ const ViewPet = () => {
           <p>Weight : {data?.pet?.weight}</p>
           <p>Color : {data?.pet?.color}</p>
           <p>Bio : {data?.pet?.bio}</p>
-          <p>Hypoallergenic : {data?.pet?.hypoallergenic ? 'Si' : 'No'}</p>
+          <p>Hypoallergenic : {data?.pet?.hypoallergenic ? 'Yes' : 'No'}</p>
           <p>Dietary Restrictions : {data?.pet?.dietaryRestrictions}</p>
           <p>Breed : {data?.pet?.breed}</p>
         </ContInfoDetails>
       </ContInfoPet>
+      {role === 'admin' && (
+        <button
+          onClick={() =>
+            dispatch(setState({ option: 'isOpenModal', value: true }))
+          }
+        >
+          Editar
+        </button>
+      )}
     </ContaintViewPet>
   );
 };
@@ -54,7 +76,20 @@ const ContaintViewPet = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 15px;
   padding: 10px;
+
+  & > button {
+    width: 300px;
+    font-size: 1.2em;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f5a336;
+    color: #fff;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+  }
 `;
 
 const ContInfoPet = styled.div`

@@ -54,4 +54,24 @@ const getAllPets = async (req, res) => {
   res.status(200).json({ pets });
 };
 
-module.exports = { addPet, getPetById, getAllPets };
+const updatePet = async (req, res) => {
+  const { id } = req.params;
+  const imgPet = req.file;
+
+  console.log(imgPet);
+
+  if (imgPet) {
+    const imgRef = ref(storage, `images/pets/${imgPet.originalname}`);
+    const resImg = await uploadBytes(imgRef, imgPet.buffer);
+    const urlImg = await getDownloadURL(imgRef);
+    req.body.picture = urlImg;
+  }
+
+  const pet = await AddPet.findById(id);
+
+  await pet.updateOne(req.body);
+
+  res.status(200).json({ message: 'Pet updated' });
+};
+
+module.exports = { addPet, getPetById, getAllPets, updatePet };

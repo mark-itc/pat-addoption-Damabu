@@ -45,7 +45,7 @@ const Nav = () => {
         <p>Pet Adoption</p>
         <UserInfo onClick={() => setViewLogout(!viewLogout)}>
           <p>{user.user?.firstName}</p>
-          <ContImgUser>{user.user?.firstName.charAt(0)}</ContImgUser>
+          <ContImgUser>{user.user?.firstName?.charAt(0)}</ContImgUser>
         </UserInfo>
       </MainContNav>
       <Main>
