@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const JWT = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { User } = require('../models/userModel');
+const { AddPet } = require('../models/addPetModel');
 
 dotenv.config({ path: './.env' });
 
@@ -56,4 +57,58 @@ const login = async (req, res) => {
   res.status(200).json({ token, user });
 };
 
-module.exports = { signUp, login };
+const getAllUsers = async (req, res) => {
+  const users = await User.find({}, { password: 0 });
+
+  res.status(200).json({ users });
+};
+
+const getUserById = async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findById({ _id: id });
+
+  user.password = undefined;
+
+  res.status(200).json({ user });
+};
+
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { email } = req.body;
+
+  const existEmail = await User.findOne({ email });
+
+  if (existEmail) {
+    return res.status(400).json({ message: 'Email already exists' });
+  }
+
+  const user = await User.findOne({ _id: id });
+  await user.updateOne({ $set: req.body });
+
+  res.status(200).json({ message: 'User updated' });
+};
+
+const getUserByIdFull = async (req, res) => {
+  const { id } = req.params;
+
+  console.log(id);
+
+  const user = await User.findById({ _id: id });
+  const adoptedPets = await AddPet.find({ adoptedBy: id });
+
+  user.password = undefined;
+
+  const userFull = { ...user._doc, adoptedPets };
+
+  res.status(200).json({ userFull });
+};
+
+module.exports = {
+  signUp,
+  login,
+  getUserById,
+  updateUser,
+  getAllUsers,
+  getUserByIdFull,
+};

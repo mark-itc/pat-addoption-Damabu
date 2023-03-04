@@ -26,6 +26,11 @@ const userSchema = new Schema({
     required: true,
   },
 
+  bio: {
+    type: String,
+    required: false,
+  },
+
   savePets: [
     {
       type: Schema.Types.ObjectId,

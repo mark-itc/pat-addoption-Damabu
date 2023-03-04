@@ -58,8 +58,6 @@ const updatePet = async (req, res) => {
   const { id } = req.params;
   const imgPet = req.file;
 
-  console.log(imgPet);
-
   if (imgPet) {
     const imgRef = ref(storage, `images/pets/${imgPet.originalname}`);
     const resImg = await uploadBytes(imgRef, imgPet.buffer);
