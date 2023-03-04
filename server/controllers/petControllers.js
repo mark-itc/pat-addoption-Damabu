@@ -127,6 +127,17 @@ const deletePet = async (req, res) => {
   res.status(200).json({ message: 'Pet deleted from saved' });
 };
 
+const getPetsByUser = async (req, res) => {
+  const { id } = req.params;
+
+  const user = await User.findById(id);
+
+  const adoptedPets = await AddPet.find({ adoptedBy: id });
+  const favoritePets = await AddPet.find({ _id: { $in: user.savePets } });
+
+  return res.status(200).json({ adoptedPets, favoritePets });
+};
+
 module.exports = {
   addPet,
   getPetById,
@@ -136,4 +147,5 @@ module.exports = {
   returnPet,
   savePet,
   deletePet,
+  getPetsByUser,
 };

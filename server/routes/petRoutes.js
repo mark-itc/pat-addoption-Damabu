@@ -8,6 +8,7 @@ const {
   returnPet,
   savePet,
   deletePet,
+  getPetsByUser,
 } = require('../controllers/petControllers');
 const { protectToken } = require('../middlewares/userMiddleswares');
 const { upload } = require('../utils/multer');
@@ -26,5 +27,6 @@ router.post('/pet/:id/adopt', adoptPet);
 router.post('/pet/:id/return', returnPet);
 router.post('/pet/:id/save', savePet);
 router.delete('/pet/:id/delete', deletePet);
+router.get('/pet/user/:id', getPetsByUser);
 
 module.exports = { petRouter: router };
