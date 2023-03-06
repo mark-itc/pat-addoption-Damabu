@@ -2,8 +2,6 @@ export const getDataCookies = (name) => {
   const cookie = document.cookie;
   const cookieArray = cookie.split(';');
 
-  console.log(cookie);
-
   let value = '';
   cookieArray.filter((item) => {
     if (item.includes(name)) {

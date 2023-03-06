@@ -7,6 +7,8 @@ import Login from '../components/Login';
 import Nav from '../components/Nav';
 import SignUp from '../components/SignUp';
 import ViewPet from '../components/ViewPet';
+import PetAdopted from '../components/PetAdopted';
+import PetSaved from '../components/PetSaved';
 
 const Router = () => {
   return (
@@ -19,6 +21,8 @@ const Router = () => {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/dashboard/viewpet/:id' element={<ViewPet />} />
           <Route path='/addpet' element={<AddPet />} />
+          <Route path='/petadopted' element={<PetAdopted />} />
+          <Route path='/petsaved' element={<PetSaved />} />
         </Route>
       </Routes>
     </BrowserRouter>

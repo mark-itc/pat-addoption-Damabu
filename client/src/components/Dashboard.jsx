@@ -32,15 +32,10 @@ const Dashboard = () => {
 
   const viewPet = (id) => {
     navigate(`/dashboard/viewpet/${id}`);
-    console.log(id);
   };
-
-  console.log(data);
 
   const adoptPet = async (e, id) => {
     e.stopPropagation();
-
-    console.log(id);
     try {
       const res = await axios({
         method: 'POST',
@@ -49,12 +44,29 @@ const Dashboard = () => {
         },
         url: `${process.env.REACT_APP_API_URL}/api/v1/pets/pet/${id}/adopt`,
       });
-      console.log(res);
     } catch (error) {
-      console.log(error.response);
       if (error.response.statusText === 'Unauthorized') {
         localStorage.removeItem('token');
         navigate('/login');
+      }
+    }
+  };
+
+  const savePet = async (e, id) => {
+    e.stopPropagation();
+    try {
+      const res = await axios({
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        url: `${process.env.REACT_APP_API_URL}/api/v1/pets/pet/${id}/save`,
+      });
+      console.log(res);
+    } catch (error) {
+      if (error.response.statusText === 'Unauthorized') {
+        localStorage.removeItem('token');
+        return navigate('/login');
       }
     }
   };
@@ -73,6 +85,7 @@ const Dashboard = () => {
             <p>Name : {pet.name}</p>
             <p>Adoption Status : {pet.adoptionStatus}</p>
             <button onClick={(e) => adoptPet(e, pet._id)}>Adopt</button>
+            <button onClick={(e) => savePet(e, pet._id)}>Saved</button>
           </CardPet>
         );
       })}

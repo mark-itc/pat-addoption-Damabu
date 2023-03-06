@@ -20,7 +20,6 @@ const Nav = () => {
     localforage
       .getItem('user')
       .then((res) => {
-        console.log(res);
         setUser(res);
       })
       .catch((err) => console.log(err));
@@ -65,6 +64,16 @@ const Nav = () => {
                   </li>
                 </ListSubMenu>
               )}
+            </>
+          )}
+          {role !== 'admin' && (
+            <>
+              <NavLink to='/petadopted'>
+                <button>Pet Adopted</button>
+              </NavLink>
+              <NavLink to='/petsaved'>
+                <button>Pet Saved</button>
+              </NavLink>
             </>
           )}
         </NavLeft>
